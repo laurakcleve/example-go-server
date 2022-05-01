@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -14,5 +15,7 @@ func main() {
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	// Wrap in log.Fatal to output errors, will not output anything otherwise
+	// https://github.com/golang/go/issues/11693
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), nil))
 }
