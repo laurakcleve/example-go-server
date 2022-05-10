@@ -3,13 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
+
+	// "log"
 	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v4"
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 )
 
 type album struct {
@@ -45,10 +46,10 @@ func NewServer(db *pgx.Conn) *Server {
 }
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("No .env file found, expecting PORT and DATABASE_URL to be set otherwise.")
-	}
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Println("No .env file found, expecting PORT and DATABASE_URL to be set otherwise.")
+	// }
 
 	databaseURL := os.Getenv("DATABASE_URL")
 	port := os.Getenv("PORT")
