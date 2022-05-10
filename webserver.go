@@ -47,7 +47,7 @@ func NewServer(db *pgx.Conn) *Server {
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Println("No .env file found")
+		log.Println("No .env file found, expecting PORT and DATABASE_URL to be set otherwise.")
 	}
 
 	databaseURL := os.Getenv("DATABASE_URL")
