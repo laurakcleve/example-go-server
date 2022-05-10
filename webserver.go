@@ -79,7 +79,7 @@ func main() {
 	server.router.POST("/albums", postAlbums)
 	server.router.POST("/gotest", server.postGoTest)
 
-	server.router.Run("localhost:" + port)
+	server.router.Run(":" + port)
 }
 
 // getAlbums responds with the list of all albums as JSON.
