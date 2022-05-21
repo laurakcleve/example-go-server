@@ -6,15 +6,31 @@ import (
 	"example/webserver/graph/generated"
 	"example/webserver/src/db"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
 const defaultPort = "8080"
+
+func graphqlHandler() gin.HandlerFunc {
+	h := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+
+	return func(c *gin.Context) {
+		h.ServeHTTP(c.Writer, c.Request)
+	}
+}
+
+func playgroundHandler() gin.HandlerFunc {
+	h := playground.Handler("GraphQL", "/query")
+
+	return func(c *gin.Context) {
+		h.ServeHTTP(c.Writer, c.Request)
+	}
+}
 
 func main() {
 	port := os.Getenv("PORT")
@@ -29,11 +45,10 @@ func main() {
 	db.InitDB()
 	defer db.DB.Close(context.Background())
 
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	r := gin.Default()
 
-	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	http.Handle("/query", srv)
+	r.POST("/query", graphqlHandler())
+	r.GET("/", playgroundHandler())
 
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	r.Run(":" + port)
 }
