@@ -36,7 +36,9 @@ func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
+		log.Printf("No PORT env found, setting to default port: %s", port)
 	}
+	
 	err := godotenv.Load()
 	if err != nil {
 		log.Println("No .env file found, expecting PORT and DATABASE_URL to be set otherwise.")
