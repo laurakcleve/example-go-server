@@ -1,11 +1,11 @@
 package controllers
 
-import ( 
+import (
+	"context"
+	"example/webserver/src/db"
 	"fmt"
 	"net/http"
-	"context"
-	"example/webserver/db"
-	
+
 	"github.com/gin-gonic/gin"
 )
 

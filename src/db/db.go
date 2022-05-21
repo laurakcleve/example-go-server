@@ -1,9 +1,10 @@
-package db 
+package db
 
 import (
 	"context"
 	"fmt"
 	"os"
+
 	"github.com/jackc/pgx/v4"
 )
 

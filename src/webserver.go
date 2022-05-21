@@ -6,8 +6,8 @@ import (
 	"log"
 	"os"
 
-	"example/webserver/controllers"
-	"example/webserver/db"
+	"example/webserver/src/controllers"
+	"example/webserver/src/db"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
